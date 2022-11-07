@@ -11,12 +11,16 @@ public class Node {
         this.index = 0;
     }
 
-    public int getDegree() {
-        return degree;
+    public void setDegree(int value){
+        this.degree += value;
     }
 
     public void setIndex(int index){
         this.index = index;
+    }
+
+    public int getDegree(){
+        return degree;
     }
 
     public int getIndex(){
