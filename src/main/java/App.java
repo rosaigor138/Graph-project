@@ -1,29 +1,93 @@
 import source.domain.Graph;
 import source.domain.Node;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
+        Scanner option = new Scanner(System.in);
+        int intChoice;
+        boolean booleanChoice;
+        float floatChoice;
+        String stringChoice;
         Graph graph = new Graph(true);
 
-        graph.addNode(new Node("A"));
-        graph.addNode(new Node("B"));
-        graph.addNode(new Node("C"));
+        System.out.println("That program is to create or import" +
+                "\n created by: \nIgor Rosa F. Pinto \nFernando Souza Pimenta");
 
-        graph.addEdge("A", "B", 10);
-        graph.addEdge("A", "A", 20);
+        System.out.println("You like to create(1) or import(2)");
+        intChoice = option.nextInt();
+        if (intChoice == 1){
+            System.out.println("That graph is a digraph ?\n true or false");
+            booleanChoice = option.nextBoolean();
+            graph = new Graph(booleanChoice);
+        }else {
+            System.out.println("We dont have that option yet.");
+            System.exit(1);
+        }
+        System.out.println("\n\n********************************\n\n");
 
-        int[][] matrix = graph.getMatrixAdj();
+        System.out.println("Now you have created a graph, you will enter with the nodes.");
+        boolean nodesAdition = true;
+        while(nodesAdition){
+            System.out.println("Enter the label of the node.");
+            stringChoice = option.next();
+            graph.addNode(new Node(stringChoice));
+            System.out.println("Enter if you want to create another node.\n true or false");
+            booleanChoice = option.nextBoolean();
+            nodesAdition = booleanChoice;
+            System.out.println("\n");
+        }
+        System.out.println("\n***************************************\n\n");
+
+        System.out.println("Now you have created the nodes, you will enter with the Edges.");
+        boolean edgeAdition = true;
+        while(edgeAdition){
+            System.out.println("Enter the label of the source node.");
+            String source_node = option.next();
+            System.out.println("Enter the label of the destination node");
+            String destination_node = option.next();
+            System.out.println("Enter with the weight of the edge");
+            floatChoice = option.nextFloat();
+            graph.addEdge(source_node,destination_node, floatChoice);
+            System.out.println("Enter if you want to create another edge.\n true or false");
+            booleanChoice = option.nextBoolean();
+            edgeAdition = booleanChoice;
+            System.out.println("\n");
+        }
+        System.out.println("\n*******************************************\n\n");
+
+
+        /*int[][] matrix = graph.getMatrixAdj();
         for(int i=0;i< graph.getOrder();i++){
             for(int j=0;j< graph.getOrder();j++){
                 System.out.print(matrix[i][j] + " ");
             }
             System.out.println();
-        }
+        } */
 
-        System.out.println("The weight of edge AB is: " + graph.getWeightEdge("AB"));
-        System.out.println("The weight of edge AA is: " + graph.getWeightEdge("AA"));
-        System.out.println("The degree of node A is: " + graph.getNodeDegree("A"));
-        System.out.println("The degree of node B is: " + graph.getNodeDegree("B"));
-        System.out.println("The degree of node C is: " + graph.getNodeDegree("C"));
+        boolean gettingInformation = true;
+        while(gettingInformation) {
+            System.out.println("What do you want to visualize about the graph ?");
+            System.out.println("Type:\n 1 to visualize graph order." +
+                    "\n 2 to visualize the degree of the graph\n\n");
+            intChoice = option.nextInt();
+            if (intChoice == 1){
+                System.out.println("The order of the graph is: "+graph.getOrder());
+                System.out.println("You want to know another thing or not." +
+                        "\n true to yes\n false to no");
+                booleanChoice = option.nextBoolean();
+                gettingInformation = booleanChoice;
+                System.out.println("\n");
+            } else if (intChoice == 2) {
+                System.out.println("What node you want to know the degree?");
+                System.out.println("Enter the label of the node!");
+                stringChoice = option.next();
+                System.out.println("The degree is: "+graph.getNodeDegree(stringChoice)+"\n");
+                System.out.println("\n");
+            }else {
+                System.out.println("We dont have that option yet.");
+                System.exit(1);
+            }
+        }
     }
 }
