@@ -1,3 +1,4 @@
+import source.domain.Converter;
 import source.domain.Graph;
 import source.domain.Node;
 
@@ -12,7 +13,7 @@ public class App {
         float floatChoice;
         String stringChoice;
         Graph graph = new Graph(true);
-        
+
         System.out.println("That program is to create or import" +
                 "\n created by: \nIgor Rosa F. Pinto \nFernando Souza Pimenta");
 
@@ -55,6 +56,7 @@ public class App {
         } else if (intChoice == 2) {
             System.out.println("Enter the path of the graph to be imported");
             stringChoice = option.next();
+            graph = Converter.importGraph(stringChoice);
         } else {
             System.out.println("We dont have that option yet.");
             System.exit(1);
