@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.*;
 
 public class Graph {
-    private List<Node> nodeList;
+    public List<Node> nodeList;
     private int numberNode;
     private boolean digraph;
     private int[][] matrixAdj;
-    private Map<String, Float> weightEdges;
-    private Map<String, Node> nodeLabel;
+    private List<String> listEdges;
+    public Map<String, Float> weightEdges;
+    public Map<String, Node> nodeLabel;
 
     public Graph(boolean digraph) {
         this.digraph = digraph;
@@ -19,14 +21,15 @@ public class Graph {
         this.numberNode = 0;
         this.weightEdges = new HashMap<>();
         this.nodeLabel = new HashMap<>();
+        this.listEdges = new ArrayList<>();
     }
 
     public void addNode(Node node) {
-        this.nodeList.add(node);
-        node.setIndex(this.numberNode);
-        this.nodeLabel.put(node.getLabel(), node);
-        this.numberNode++;
-        this.createMatrixAdj();
+        if (!nodeLabel.containsKey(node.getLabel())) {
+            this.nodeList.add(node);
+            this.nodeLabel.put(node.getLabel(), node);
+            this.numberNode++;
+        }
     }
 
     public void createMatrixAdj() {
@@ -39,10 +42,10 @@ public class Graph {
     }
 
     public void addEdge(String source, String destination, float weight) {
-        this.attMatrix(this.nodeLabel.get(source).getIndex(), this.nodeLabel.get(destination).getIndex());
         this.nodeLabel.get(source).setDegree(1);
         this.nodeLabel.get(destination).setDegree(1);
         this.weightEdges.put(source + destination, weight);
+        this.listEdges.add(source + destination);
     }
 
     public void attMatrix(int source, int destination) {
@@ -57,6 +60,20 @@ public class Graph {
     }
 
     public int[][] getMatrixAdj() {
+        this.createMatrixAdj();
+        int value=0;
+        for (Node node : nodeLabel.values()){
+            node.setIndex(value);
+            value++;
+        }
+        for (String edges : listEdges){
+            this.matrixAdj[this.nodeLabel.get("" + edges.charAt(0)).getIndex()]
+                          [this.nodeLabel.get("" + edges.charAt(1)).getIndex()] = 1;
+            if (!digraph){
+                this.matrixAdj[this.nodeLabel.get("" + edges.charAt(1)).getIndex()]
+                              [this.nodeLabel.get("" + edges.charAt(0)).getIndex()] = 1;
+            }
+        }
         return this.matrixAdj;
     }
 
@@ -66,5 +83,25 @@ public class Graph {
 
     public int getNodeDegree(String node) {
         return this.nodeLabel.get(node).getDegree();
+    }
+
+    public boolean isDigraph(){
+        return this.digraph;
+    }
+
+    public Map<String, Node> getNodeLabel(){
+        return this.nodeLabel;
+    }
+
+    public List<Node> getNodeList(){
+        return this.nodeList;
+    }
+
+    public List<String> getListEdges(){
+        return this.listEdges;
+    }
+
+    public Map<String, Float> getWeightEdges() {
+        return this.weightEdges;
     }
 }
