@@ -16,7 +16,6 @@ public class App {
 
         System.out.println("That program is to create or import" +
                 "\n created by: \nIgor Rosa F. Pinto \nFernando Souza Pimenta");
-
         System.out.println("You like to create(1) or import(2)");
         intChoice = option.nextInt();
         if (intChoice == 1){
@@ -56,7 +55,7 @@ public class App {
         } else if (intChoice == 2) {
             System.out.println("Enter the path of the graph to be imported");
             stringChoice = option.next();
-            graph = Converter.importGraph(stringChoice);
+            graph = Converter.dotToGraph(stringChoice);
         } else {
             System.out.println("We dont have that option yet.");
             System.exit(1);
@@ -66,9 +65,13 @@ public class App {
         boolean gettingInformation = true;
         while(gettingInformation) {
             System.out.println("What do you want to visualize about the graph ?");
-            System.out.println("Type:\n 1 to visualize graph order." +
-                    "\n 2 to visualize the degree of the graph " +
-                    "\n 3 to visualize the matrix of adjacency\n\n");
+            System.out.println("""
+                    Type:
+                     1 to visualize graph order.
+                     2 to visualize the degree of the graph\s
+                     3 to visualize the matrix of adjacency
+                     4 to export graph
+                    """);
             intChoice = option.nextInt();
             if (intChoice == 1){
                 System.out.println("The order of the graph is: "+graph.getOrder());
@@ -91,6 +94,11 @@ public class App {
                     }
                     System.out.println();
                 }
+            } else if (intChoice == 4) {
+                System.out.println("Enter the path of the graph to be exported");
+                stringChoice = option.next();
+                Converter.GraphToDot(stringChoice, graph);
+                System.out.println("\n Successfully exported file");
             } else {
                 System.out.println("We dont have that option yet.");
                 System.exit(1);

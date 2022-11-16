@@ -3,7 +3,7 @@ package source.domain;
 import java.io.*;
 
 public abstract class Converter {
-    public static Graph importGraph(String filePath) throws IOException {
+    public static Graph dotToGraph(String filePath) throws IOException {
         filePath = filePath.replaceAll("\\\\", "/");
         Graph graph = new Graph(true);
         File file = new File(filePath);
@@ -48,5 +48,45 @@ public abstract class Converter {
             }
         }
         return graph;
+    }
+
+    public static void GraphToDot(String name, Graph graph) throws IOException {
+        File file = new File(name + ".dot");
+        FileWriter fileWriter = new FileWriter(file, true);
+        BufferedWriter bfWriter = new BufferedWriter(fileWriter);
+        file.createNewFile();
+
+        if (graph.isDigraph()) {
+            bfWriter.write("digraph {");
+            bfWriter.newLine();
+            for (Node node : graph.getNodeList()) {
+                if (node.getDegree() == 0) {
+                    bfWriter.write("     " + node.getLabel() + " ;");
+                    bfWriter.newLine();
+                }
+            }
+            for (String edge : graph.getListEdges()) {
+                bfWriter.write("     " + edge.charAt(0) + " -> " + edge.charAt(1) + " [label=\"" +
+                        graph.getWeightEdges().get(edge) + "\"];");
+                bfWriter.newLine();
+            }
+        } else {
+            bfWriter.write("graph {");
+            bfWriter.newLine();
+            for (Node node : graph.getNodeList()) {
+                if (node.getDegree() == 0) {
+                    bfWriter.write("  " + node.getLabel() + " ;");
+                    bfWriter.newLine();
+                }
+            }
+            for (String edge : graph.getListEdges()) {
+                bfWriter.write("  " + edge.charAt(0) + " -- " + edge.charAt(1) + " [label=\"" +
+                        graph.getWeightEdges().get(edge) + "\"];");
+                bfWriter.newLine();
+            }
+        }
+        bfWriter.write("  }");
+        bfWriter.close();
+        fileWriter.close();
     }
 }
