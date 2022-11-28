@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.io.*;
 
 public class Graph {
     public List<Node> nodeList;
@@ -14,6 +13,7 @@ public class Graph {
     private List<String> listEdges;
     public Map<String, Float> weightEdges;
     public Map<String, Node> nodeLabel;
+    public Map<String, String> edgeNodes;
 
     public Graph(boolean digraph) {
         this.digraph = digraph;
@@ -21,6 +21,7 @@ public class Graph {
         this.numberNode = 0;
         this.weightEdges = new HashMap<>();
         this.nodeLabel = new HashMap<>();
+        this.edgeNodes = new HashMap<>();
         this.listEdges = new ArrayList<>();
     }
 
@@ -44,8 +45,10 @@ public class Graph {
     public void addEdge(String source, String destination, float weight) {
         this.nodeLabel.get(source).setDegree(1);
         this.nodeLabel.get(destination).setDegree(1);
-        this.weightEdges.put(source + destination, weight);
-        this.listEdges.add(source + destination);
+        this.edgeNodes.put("e" + this.listEdges.size(), source + destination);
+        this.weightEdges.put("e" + this.listEdges.size(), weight);
+        this.listEdges.add("e" + this.listEdges.size());
+        System.out.println(listEdges);
     }
 
     public void attMatrix(int source, int destination) {
@@ -67,11 +70,11 @@ public class Graph {
             value++;
         }
         for (String edges : listEdges){
-            this.matrixAdj[this.nodeLabel.get("" + edges.charAt(0)).getIndex()]
-                          [this.nodeLabel.get("" + edges.charAt(1)).getIndex()] = 1;
+            this.matrixAdj[this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(0)).getIndex()]
+                          [this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(1)).getIndex()] += 1;
             if (!digraph){
-                this.matrixAdj[this.nodeLabel.get("" + edges.charAt(1)).getIndex()]
-                              [this.nodeLabel.get("" + edges.charAt(0)).getIndex()] = 1;
+                this.matrixAdj[this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(1)).getIndex()]
+                              [this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(0)).getIndex()] += 1;
             }
         }
         return this.matrixAdj;
@@ -103,5 +106,9 @@ public class Graph {
 
     public Map<String, Float> getWeightEdges() {
         return this.weightEdges;
+    }
+
+    public Map<String, String> getEdgeNodes(){
+        return this.edgeNodes;
     }
 }

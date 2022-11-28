@@ -66,7 +66,8 @@ public abstract class Converter {
                 }
             }
             for (String edge : graph.getListEdges()) {
-                bfWriter.write("     " + edge.charAt(0) + " -> " + edge.charAt(1) + " [label=\"" +
+                bfWriter.write("     " + graph.getEdgeNodes().get(edge).charAt(0) + " -> " +
+                        graph.getEdgeNodes().get(edge).charAt(1) + " [label=\"" +
                         graph.getWeightEdges().get(edge) + "\"];");
                 bfWriter.newLine();
             }
@@ -80,7 +81,8 @@ public abstract class Converter {
                 }
             }
             for (String edge : graph.getListEdges()) {
-                bfWriter.write("  " + edge.charAt(0) + " -- " + edge.charAt(1) + " [label=\"" +
+                bfWriter.write("     " + graph.getEdgeNodes().get(edge).charAt(0) + " -- " +
+                        graph.getEdgeNodes().get(edge).charAt(1) + " [label=\"" +
                         graph.getWeightEdges().get(edge) + "\"];");
                 bfWriter.newLine();
             }
