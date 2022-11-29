@@ -71,6 +71,7 @@ public class App {
                      2 to visualize the degree of the graph\s
                      3 to visualize the matrix of adjacency
                      4 to export graph
+                     5 to check if the graph is simple
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
@@ -99,6 +100,8 @@ public class App {
                 stringChoice = option.next();
                 Converter.GraphToDot(stringChoice, graph);
                 System.out.println("\n Successfully exported file");
+            } else if (intChoice ==5) {
+                System.out.println(graph.isSimpleGraph());
             } else {
                 System.out.println("We dont have that option yet.");
                 System.exit(1);

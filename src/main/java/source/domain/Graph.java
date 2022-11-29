@@ -48,7 +48,6 @@ public class Graph {
         this.edgeNodes.put("e" + this.listEdges.size(), source + destination);
         this.weightEdges.put("e" + this.listEdges.size(), weight);
         this.listEdges.add("e" + this.listEdges.size());
-        System.out.println(listEdges);
     }
 
     public void attMatrix(int source, int destination) {
@@ -64,20 +63,40 @@ public class Graph {
 
     public int[][] getMatrixAdj() {
         this.createMatrixAdj();
-        int value=0;
-        for (Node node : nodeLabel.values()){
+        int value = 0;
+        for (Node node : nodeLabel.values()) {
             node.setIndex(value);
             value++;
         }
-        for (String edges : listEdges){
+        for (String edges : listEdges) {
             this.matrixAdj[this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(0)).getIndex()]
-                          [this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(1)).getIndex()] += 1;
-            if (!digraph){
+                    [this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(1)).getIndex()] += 1;
+            if (!digraph) {
                 this.matrixAdj[this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(1)).getIndex()]
-                              [this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(0)).getIndex()] += 1;
+                        [this.nodeLabel.get("" + this.edgeNodes.get(edges).charAt(0)).getIndex()] += 1;
             }
         }
         return this.matrixAdj;
+    }
+
+    public boolean isSimpleGraph() {
+        getMatrixAdj();
+        for (int i = 0; i < this.numberNode; i++) {
+            if (this.matrixAdj[i][i] != 0) {
+                return false;
+            }
+            for (int j = 0; j < this.numberNode; j++) {
+                if (!this.digraph) {
+                    if (this.matrixAdj[i][j] > 1) {
+                        return false;
+                    }
+                } else {
+                    if (this.matrixAdj[i][j] + this.matrixAdj[j][i] > 1) {
+                        return false;
+                    }
+                }
+            }
+        }return true;
     }
 
     public float getWeightEdge(String edge) {
@@ -88,19 +107,19 @@ public class Graph {
         return this.nodeLabel.get(node).getDegree();
     }
 
-    public boolean isDigraph(){
+    public boolean isDigraph() {
         return this.digraph;
     }
 
-    public Map<String, Node> getNodeLabel(){
+    public Map<String, Node> getNodeLabel() {
         return this.nodeLabel;
     }
 
-    public List<Node> getNodeList(){
+    public List<Node> getNodeList() {
         return this.nodeList;
     }
 
-    public List<String> getListEdges(){
+    public List<String> getListEdges() {
         return this.listEdges;
     }
 
@@ -108,7 +127,7 @@ public class Graph {
         return this.weightEdges;
     }
 
-    public Map<String, String> getEdgeNodes(){
+    public Map<String, String> getEdgeNodes() {
         return this.edgeNodes;
     }
 }
