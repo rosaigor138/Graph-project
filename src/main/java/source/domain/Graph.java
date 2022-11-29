@@ -137,4 +137,11 @@ public class Graph {
             }
         }return true;
     }
+    public boolean isCompleteGraph(){
+        for(Node node: getNodeList()){
+            if(node.getDegree() != getNodeList().size()-1){
+                return false;
+            }
+        }return true;
+    }
 }

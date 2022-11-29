@@ -76,21 +76,24 @@ public class App {
                      4 to export graph
                      5 to check if the graph is simple
                      6 to check if the graph is regular
+                     7 to check if the graph is complete
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
                 System.out.println("The order of the graph is: "+graph.getOrder());
-                System.out.println("You want to know another thing or not." +
-                        "\n true to yes\n false to no");
+                System.out.println("""
+                        You want to know another thing or not.
+                         true to yes
+                         false to no""");
                 booleanChoice = option.nextBoolean();
                 gettingInformation = booleanChoice;
-                System.out.println("\n");
+                System.out.println("\n\n******************\n");
             } else if (intChoice == 2) {
                 System.out.println("What node you want to know the degree?");
                 System.out.println("Enter the label of the node!");
                 stringChoice = option.next();
                 System.out.println("The degree is: "+graph.getNodeDegree(stringChoice)+"\n");
-                System.out.println("\n");
+                System.out.println("\n\n******************\n");
             } else if (intChoice == 3) {
                 int[][] matrix = graph.getMatrixAdj();
                 for(int i=0;i< graph.getOrder();i++) {
@@ -99,17 +102,24 @@ public class App {
                     }
                     System.out.println();
                 }
+                System.out.println("\n\n******************\n");
             } else if (intChoice == 4) {
                 System.out.println("Enter the path of the graph to be exported");
                 stringChoice = option.next();
                 Converter.GraphToDot(stringChoice, graph);
-                System.out.println("\n Successfully exported file");
+                System.out.println("\n Successfully exported file"+"\n\n******************\n");
             } else if (intChoice ==5) {
-                System.out.println(graph.isSimpleGraph());
+                System.out.println("Answer: "+graph.isSimpleGraph()+"\n\n******************\n");
             } else if (intChoice == 6) {
-                System.out.println(graph.isRegularGraph());
+                System.out.println("Answer: "+graph.isRegularGraph()+"\n\n******************\n");
+            } else if (intChoice == 7) {
+                System.out.println("Answer: "+graph.isCompleteGraph()+"\n\n******************\n");
             } else {
-                System.out.println("We dont have that option yet.");
+                System.out.println("""
+                        We dont have that option yet.
+
+
+                        ******************""");
                 System.exit(1);
             }
         }
