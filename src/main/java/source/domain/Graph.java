@@ -130,4 +130,11 @@ public class Graph {
     public Map<String, String> getEdgeNodes() {
         return this.edgeNodes;
     }
+    public boolean isRegularGraph(){
+        for(int i = 0; i<getNodeList().size(); i ++){
+            if (i > 0 && this.nodeList.get(i).getDegree() != this.nodeList.get(i--).getDegree()){
+                return false;
+            }
+        }return true;
+    }
 }

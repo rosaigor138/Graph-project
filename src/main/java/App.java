@@ -14,8 +14,11 @@ public class App {
         String stringChoice;
         Graph graph = new Graph(true);
 
-        System.out.println("That program is to create or import" +
-                "\n created by: \nIgor Rosa F. Pinto \nFernando Souza Pimenta");
+        System.out.println("""
+                That program is to create or import
+                 created by:\s
+                Igor Rosa F. Pinto\s
+                Fernando Souza Pimenta""");
         System.out.println("You like to create(1) or import(2)");
         intChoice = option.nextInt();
         if (intChoice == 1){
@@ -72,6 +75,7 @@ public class App {
                      3 to visualize the matrix of adjacency
                      4 to export graph
                      5 to check if the graph is simple
+                     6 to check if the graph is regular
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
@@ -102,6 +106,8 @@ public class App {
                 System.out.println("\n Successfully exported file");
             } else if (intChoice ==5) {
                 System.out.println(graph.isSimpleGraph());
+            } else if (intChoice == 6) {
+                System.out.println(graph.isRegularGraph());
             } else {
                 System.out.println("We dont have that option yet.");
                 System.exit(1);
