@@ -77,6 +77,7 @@ public class App {
                      5 to check if the graph is simple
                      6 to check if the graph is regular
                      7 to check if the graph is complete
+                     8 to check if there is a way between two nodes
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
@@ -114,7 +115,14 @@ public class App {
                 System.out.println("Answer: "+graph.isRegularGraph()+"\n\n******************\n");
             } else if (intChoice == 7) {
                 System.out.println("Answer: "+graph.isCompleteGraph()+"\n\n******************\n");
-            } else {
+            } else if (intChoice == 8) {
+                System.out.println("Source Node: ");
+                String source_node = option.next();
+                System.out.println("Destination Node: ");
+                String destination_node = option.next();
+                System.out.println("Answer: "+graph.isThereAWay(source_node, destination_node)+
+                                   "\n\n******************\n");
+            }else {
                 System.out.println("""
                         We dont have that option yet.
 

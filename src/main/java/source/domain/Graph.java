@@ -78,7 +78,7 @@ public class Graph {
         }
         return this.matrixAdj;
     }
-
+    
     public boolean isSimpleGraph() {
         getMatrixAdj();
         for (int i = 0; i < this.numberNode; i++) {
@@ -97,6 +97,43 @@ public class Graph {
                 }
             }
         }return true;
+    }
+
+    public boolean isRegularGraph(){
+        for(int i = 0; i<getNodeList().size(); i ++){
+            if (i > 0 && this.nodeList.get(i).getDegree() != this.nodeList.get(i--).getDegree()){
+                return false;
+            }
+        }return true;
+    }
+    public boolean isCompleteGraph(){
+        for(Node node: getNodeList()){
+            if(node.getDegree() != getNodeList().size()-1){
+                return false;
+            }
+        }return true;
+    }
+
+    public boolean isThereAWay(String source, String destination){
+        this.getMatrixAdj();
+        boolean[] visited = new boolean[this.numberNode];
+        this.checkWay(this.nodeLabel.get(source).getIndex(), visited);
+        return visited[this.nodeLabel.get(destination).getIndex()];
+    }
+
+    public void checkWay(int source, boolean[] visited){
+        if (visited[source]){
+            return;
+        }
+        else{
+            visited[source] = true;
+        }
+
+        for (int i = 0; i < this.numberNode; i++){
+            if (this.matrixAdj[source][i] >= 1){
+                checkWay(i, visited);
+            }
+        }
     }
 
     public float getWeightEdge(String edge) {
@@ -129,19 +166,5 @@ public class Graph {
 
     public Map<String, String> getEdgeNodes() {
         return this.edgeNodes;
-    }
-    public boolean isRegularGraph(){
-        for(int i = 0; i<getNodeList().size(); i ++){
-            if (i > 0 && this.nodeList.get(i).getDegree() != this.nodeList.get(i--).getDegree()){
-                return false;
-            }
-        }return true;
-    }
-    public boolean isCompleteGraph(){
-        for(Node node: getNodeList()){
-            if(node.getDegree() != getNodeList().size()-1){
-                return false;
-            }
-        }return true;
     }
 }
