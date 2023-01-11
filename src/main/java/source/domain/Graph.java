@@ -121,6 +121,21 @@ public class Graph {
         return visited[this.nodeLabel.get(destination).getIndex()];
     }
 
+    public List<String> sinkList(){
+        getMatrixAdj();
+        ArrayList<String> listSink = new ArrayList<>();
+        int sum = 0;
+        for (int i = 0; i < numberNode; i++){
+            for (int j=0; j < numberNode; j++) {
+                sum = sum + this.matrixAdj[i][j];
+            }if (sum == 0){
+                listSink.add(this.nodeList.get(i).getLabel());
+            }sum = 0;
+        }return listSink;
+    }
+
+
+
     public void checkWay(int source, boolean[] visited){
         if (visited[source]){
             return;
