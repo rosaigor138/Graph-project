@@ -121,6 +121,21 @@ public class Graph {
         return visited[this.nodeLabel.get(destination).getIndex()];
     }
 
+    public void checkWay(int source, boolean[] visited){
+        if (visited[source]){
+            return;
+        }
+        else{
+            visited[source] = true;
+        }
+
+        for (int i = 0; i < this.numberNode; i++){
+            if (this.matrixAdj[source][i] >= 1){
+                checkWay(i, visited);
+            }
+        }
+    }
+
     public List<String> sinkList(){
         getMatrixAdj();
         ArrayList<String> listSink = new ArrayList<>();
@@ -155,22 +170,19 @@ public class Graph {
         return listSource;
     }
 
-
-
-    public void checkWay(int source, boolean[] visited){
-        if (visited[source]){
-            return;
-        }
-        else{
-            visited[source] = true;
-        }
-
+    public List<String> checkDirectTransitivity(String node){
+        this.getMatrixAdj();
+        boolean[] visited = new boolean[this.numberNode];
+        ArrayList<String> transitivityList = new ArrayList<>();
+        this.checkWay(this.nodeLabel.get(node).getIndex(), visited);
         for (int i = 0; i < this.numberNode; i++){
-            if (this.matrixAdj[source][i] >= 1){
-                checkWay(i, visited);
+            if (visited[i]){
+                transitivityList.add(this.nodeList.get(i).getLabel());
             }
         }
+        return transitivityList;
     }
+
 
     public float getWeightEdge(String edge) {
         return this.weightEdges.get(edge);
