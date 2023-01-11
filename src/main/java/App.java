@@ -79,6 +79,7 @@ public class App {
                      7 to check if the graph is complete
                      8 to check if there is a way between two nodes
                      9 to visualize the graph sinks
+                     10 to visualize the graph sources
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
@@ -127,7 +128,19 @@ public class App {
 
                 System.out.println("The list of nodes who is a sink:");
                 System.out.println(graph.sinkList());
-                System.out.println("That is the list, if it is null its because there are none sink");
+                System.out.println("That is the list, if it is null its because there are non sink edge");
+                System.out.println("\n\n******************\n");
+                System.out.println("""
+                        You want to know another thing or not.
+                         true to yes
+                         false to no""");
+                booleanChoice = option.nextBoolean();
+                gettingInformation =  booleanChoice;
+                System.out.println("\n\n******************\n");
+            } else if (intChoice == 10) {
+                System.out.println("The list of nodes who is a source");
+                System.out.println(graph.sourceList());
+                System.out.println("That is the list, if it is null is because there are non source edge");
                 System.out.println("\n\n******************\n");
                 System.out.println("""
                         You want to know another thing or not.
