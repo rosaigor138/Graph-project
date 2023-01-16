@@ -195,6 +195,36 @@ public class Graph {
         }return intransitivityList;
     }
 
+    public boolean isConnect(){
+        this.getMatrixAdj();
+        boolean[] visited = new boolean[this.numberNode];
+        this.checkConnectivity(0, visited);
+        for (int i = 0; i < this.numberNode; i++){
+            if (!visited[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void checkConnectivity(int source, boolean[] visited){
+        if (visited[source]){
+            return;
+        }
+        else{
+            visited[source] = true;
+        }
+
+        for (int i = 0; i < this.numberNode; i++) {
+            if (this.matrixAdj[source][i] >= 1) {
+                checkConnectivity(i, visited);
+            }
+            if (this.matrixAdj[i][source] >= 1) {
+                checkConnectivity(i, visited);
+            }
+        }
+    }
+
     public float getWeightEdge(String edge) {
         return this.weightEdges.get(edge);
     }
