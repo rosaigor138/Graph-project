@@ -81,6 +81,7 @@ public class App {
                      9 to visualize the graph sinks
                      10 to visualize the graph sources
                      11 to visualize the direct transitivity of a node
+                     12 to visualize the indirect transitivity of the node
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
@@ -163,7 +164,20 @@ public class App {
                 booleanChoice = option.nextBoolean();
                 gettingInformation =  booleanChoice;
                 System.out.println("\n\n******************\n");
-            }else {
+            } else if (intChoice == 12) {
+                System.out.println("Enter the label of the node");
+                stringChoice = option.next();
+                System.out.println("The list of indirect transitivity of this node is:");
+                System.out.println(graph.checkIndirectTransitivity(stringChoice));
+                System.out.println("\n\n******************\n");
+                System.out.println("""
+                        You want to know another thing or not.
+                         true to yes
+                         false to no""");
+                booleanChoice = option.nextBoolean();
+                gettingInformation =  booleanChoice;
+                System.out.println("\n\n******************\n");
+            } else {
                 System.out.println("""
                         We dont have that option yet.
 

@@ -183,6 +183,17 @@ public class Graph {
         return transitivityList;
     }
 
+    public  List<String> checkIndirectTransitivity(String node){
+        this.getMatrixAdj();
+        ArrayList<String> intransitivityList = new ArrayList<>();
+        String nodeSource = "";
+        for (int i= 0; i < this.numberNode; i++){
+            nodeSource = this.nodeList.get(i).getLabel();
+            if(this.isThereAWay(nodeSource,node)){
+                intransitivityList.add(nodeSource);
+            }
+        }return intransitivityList;
+    }
 
     public float getWeightEdge(String edge) {
         return this.weightEdges.get(edge);
