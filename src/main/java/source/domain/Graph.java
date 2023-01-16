@@ -1,9 +1,6 @@
 package source.domain;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Graph {
     public List<Node> nodeList;
@@ -223,6 +220,56 @@ public class Graph {
                 checkConnectivity(i, visited);
             }
         }
+    }
+
+    public void printDijkstra(String node){
+        float[] list = this.getDijkstra(node);
+        for (int i = 0; i < this.numberNode; i++){
+            System.out.println(this.nodeList.get(i).getLabel() + " - " + list[i]);
+        }
+    }
+
+    public float[] getDijkstra(String node) {
+        this.getMatrixAdj();
+        float[] listDijkstra = new float[this.numberNode];
+        boolean[] visited = new boolean[this.numberNode];
+        for (int i = 0; i < this.numberNode; i++) {
+            listDijkstra[i] = Integer.MAX_VALUE;
+        }
+        listDijkstra[nodeLabel.get(node).getIndex()] = 0;
+        this.checkWay(nodeLabel.get(node).getIndex(), visited, listDijkstra);
+        return listDijkstra;
+    }
+
+    public void checkWay(int source, boolean[] visited, float[] listDijkstra){
+        float minValue = Integer.MAX_VALUE;
+        int minValueNode = 0;
+
+        if (visited[source]){
+            return;
+        }
+        else{
+            visited[source] = true;
+        }
+
+        for (int i = 0; i < this.numberNode; i++){
+            if (this.matrixAdj[source][i] >= 1){
+                for (Map.Entry<String, String> set :
+                        edgeNodes.entrySet()) {
+                    if (Objects.equals(set.getValue(), nodeList.get(source).getLabel() +
+                            nodeList.get(i).getLabel())){
+                        if (listDijkstra[i] > this.weightEdges.get(set.getKey()) + listDijkstra[source]){
+                            listDijkstra[i] = this.weightEdges.get(set.getKey()) + listDijkstra[source];
+                        }
+                    }
+                }
+            }
+            if (listDijkstra[i] < minValue && !visited[i]){
+                minValue = listDijkstra[i];
+                minValueNode = i;
+            }
+        }
+        this.checkWay(minValueNode, visited, listDijkstra);
     }
 
     public float getWeightEdge(String edge) {

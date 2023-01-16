@@ -83,6 +83,7 @@ public class App {
                      11 to visualize the direct transitivity of a node
                      12 to visualize the indirect transitivity of the node
                      13 to check if the graph is connected
+                     14 to visualize Dijkstra
                     """);
             intChoice = option.nextInt();
             if (intChoice == 1){
@@ -188,8 +189,21 @@ public class App {
                          false to no""");
                 booleanChoice = option.nextBoolean();
                 gettingInformation =  booleanChoice;
-                System.out.println("\n\n******************\n");}
-            else {
+                System.out.println("\n\n******************\n");
+            }else if (intChoice == 14) {
+                System.out.println("Enter the label of the source node");
+                stringChoice = option.next();
+                System.out.println("The dijkstra is:");
+                graph.printDijkstra(stringChoice);
+                System.out.println("\n\n******************\n");
+                System.out.println("""
+                        You want to know another thing or not.
+                         true to yes
+                         false to no""");
+                booleanChoice = option.nextBoolean();
+                gettingInformation =  booleanChoice;
+                System.out.println("\n\n******************\n");
+            } else {
                 System.out.println("""
                         We dont have that option yet.
 
